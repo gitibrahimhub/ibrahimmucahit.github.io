@@ -17,6 +17,13 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İbrahim Mücahit | Malzeme Mühendisi & Araştırmacı</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
         tailwind.config = {
             darkMode: 'class',
             theme: {
@@ -42,6 +49,18 @@
                     animation: {
                         'spin-slow': 'spin 15s linear infinite',
                         'spin-reverse': 'spin 10s linear infinite reverse',
+                        'draw-line': 'drawLine 2s ease-out forwards',
+                        'fade-in-up': 'fadeInUp 1s ease-out forwards',
+                    },
+                    keyframes: {
+                        drawLine: {
+                            '0%': { strokeDasharray: '1000', strokeDashoffset: '1000' },
+                            '100%': { strokeDasharray: '1000', strokeDashoffset: '0' },
+                        },
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(10px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
                     }
                 }
             }
@@ -69,6 +88,10 @@
         }
         details > summary::-webkit-details-marker {
             display: none;
+        }
+        .chart-grid-line {
+            stroke: rgba(255, 255, 255, 0.1);
+            stroke-dasharray: 4;
         }
     </style>
 </head>
@@ -350,7 +373,7 @@
                 </div>
             </details>
 
-            <!-- BSc Coursework -->
+            <!-- BSc Coursework (UPDATED: Dual Line Graph & 5 Categories) -->
             <details class="group bg-dark-800 border border-white/5 rounded-2xl overflow-hidden transition-all duration-300 hover:border-primary-500/30 open:ring-1 open:ring-primary-500/30 mt-8">
                 <summary class="flex items-center justify-between p-8 cursor-pointer select-none bg-gradient-to-r from-dark-800 to-dark-900 hover:to-dark-800 transition-all">
                     <div class="flex items-center gap-4">
@@ -358,8 +381,8 @@
                             <i data-lucide="library" class="w-8 h-8"></i>
                         </div>
                         <div>
-                            <h3 class="text-2xl font-bold text-white group-hover:text-primary-400 transition-colors">Lisans Dersleri (BSc)</h3>
-                            <p class="text-sm text-gray-400 mt-1">İTÜ Metalurji ve Malzeme Mühendisliği - Uzmanlık Alanları</p>
+                            <h3 class="text-2xl font-bold text-white group-hover:text-primary-400 transition-colors">Lisans Dersleri ve Başarı Analizi (BSc)</h3>
+                            <p class="text-sm text-gray-400 mt-1">İTÜ Metalurji ve Malzeme Mühendisliği - Akademik Performans & Uzmanlık</p>
                         </div>
                     </div>
                     <div class="flex items-center justify-center w-10 h-10 rounded-full border border-white/10 bg-dark-900 group-hover:bg-dark-800 group-hover:border-primary-500/30 transition-all">
@@ -368,42 +391,132 @@
                 </summary>
                 
                 <div class="p-8 border-t border-white/5 bg-dark-900/30">
+                    
+                    <!-- DUAL-LINE SUCCESS TREND GRAPH -->
+                    <div class="mb-12 bg-dark-800/50 rounded-xl p-6 border border-white/5 relative overflow-hidden">
+                        <h4 class="text-lg font-bold text-white mb-6 flex items-center gap-2 relative z-10">
+                            <i data-lucide="trending-up" class="w-5 h-5 text-green-400"></i>
+                            Akademik Başarı Analizi: Dönemlik vs Genel Ortalama
+                        </h4>
+                        
+                        <!-- Legend -->
+                        <div class="flex gap-6 mb-4 text-xs font-mono relative z-10">
+                            <div class="flex items-center gap-2">
+                                <span class="w-3 h-3 rounded-full bg-green-400"></span>
+                                <span class="text-gray-300">Dönem Ortalaması (Term GPA)</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="w-3 h-3 rounded-full bg-primary-500"></span>
+                                <span class="text-gray-300">Genel Ortalama (Cumulative GPA)</span>
+                            </div>
+                        </div>
+
+                        <!-- Chart Container -->
+                        <div class="relative w-full h-64 bg-dark-900/50 rounded-lg border border-white/5 p-4">
+                            <!-- Grid Lines -->
+                            <div class="absolute inset-0 flex flex-col justify-between p-4 opacity-20 pointer-events-none">
+                                <div class="w-full h-px bg-gray-400"></div> <!-- 4.0 -->
+                                <div class="w-full h-px bg-gray-400"></div> <!-- 3.0 -->
+                                <div class="w-full h-px bg-gray-400"></div> <!-- 2.0 -->
+                                <div class="w-full h-px bg-gray-400"></div> <!-- 1.0 -->
+                                <div class="w-full h-px bg-gray-400"></div> <!-- 0.0 -->
+                            </div>
+                            
+                            <!-- Y-Axis Labels -->
+                            <div class="absolute left-0 top-0 bottom-0 flex flex-col justify-between py-2 text-[10px] text-gray-500 font-mono pl-1">
+                                <span>4.00</span>
+                                <span>3.00</span>
+                                <span>2.00</span>
+                                <span>1.00</span>
+                                <span>0.00</span>
+                            </div>
+
+                            <!-- SVG Chart -->
+                            <svg class="absolute inset-0 w-full h-full p-4 overflow-visible" preserveAspectRatio="none" viewBox="0 0 100 100">
+                                <!-- Term GPA Path (Green) - "Rising Star" Effect -->
+                                <polyline 
+                                    points="0,42.5 14,47.5 28,40 42,35 57,25 71,20 85,10 100,5" 
+                                    fill="none" 
+                                    stroke="#4ade80" 
+                                    stroke-width="3" 
+                                    stroke-linecap="round" 
+                                    stroke-linejoin="round"
+                                    class="animate-draw-line drop-shadow-[0_0_6px_rgba(74,222,128,0.5)]"
+                                />
+                                
+                                <!-- Cumulative GPA Path (Blue) - "Steady Growth" Effect -->
+                                <polyline 
+                                    points="0,42.5 14,45 28,43.5 42,41.25 57,38 71,35 85,31.25 100,26.25" 
+                                    fill="none" 
+                                    stroke="#0ea5e9" 
+                                    stroke-width="3" 
+                                    stroke-linecap="round" 
+                                    stroke-linejoin="round"
+                                    class="animate-draw-line drop-shadow-[0_0_6px_rgba(14,165,233,0.5)]"
+                                    style="animation-delay: 0.5s;"
+                                />
+
+                                <!-- Data Points (Decorative) -->
+                                <circle cx="100" cy="5" r="1.5" fill="#4ade80" class="animate-fade-in-up" style="animation-delay: 1.5s;" />
+                                <circle cx="100" cy="26.25" r="1.5" fill="#0ea5e9" class="animate-fade-in-up" style="animation-delay: 1.5s;" />
+                            </svg>
+                            
+                            <!-- X-Axis Labels (Semesters) -->
+                            <div class="absolute bottom-0 left-0 right-0 flex justify-between px-4 pb-1 text-[10px] text-gray-500 font-mono">
+                                <span>1.</span>
+                                <span>2.</span>
+                                <span>3.</span>
+                                <span>4.</span>
+                                <span>5.</span>
+                                <span>6.</span>
+                                <span>7.</span>
+                                <span>8. Dönem</span>
+                            </div>
+                        </div>
+                        
+                        <p class="text-sm text-gray-400 mt-6 italic border-l-2 border-green-500/50 pl-4">
+                            "Eğitim hayatımın ilk yıllarındaki adaptasyon sürecinin ardından, özellikle <strong>uzmanlık derslerine (3. ve 4. sınıf)</strong> geçtiğimde dönem ortalamamdaki (yeşil çizgi) belirgin artış, mesleki konulara olan ilgimi ve yetkinliğimi kanıtlamaktadır."
+                        </p>
+                    </div>
+
+                    <!-- COURSE CATEGORIES -->
                     <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-8">
                         
                         <!-- 1. Yüksek Sıcaklık & İleri Malzemeler (Odak Alanı) -->
-                        <div class="bg-dark-800/50 rounded-2xl p-6 border border-white/5 hover:border-amber-500/30 transition-colors">
+                        <div class="bg-dark-800/50 rounded-2xl p-6 border border-amber-500/20 hover:border-amber-500/50 transition-colors shadow-[0_0_15px_rgba(245,158,11,0.05)]">
                             <div class="flex items-center gap-3 mb-6 pb-4 border-b border-white/5">
                                 <div class="p-2 rounded-lg bg-amber-500/10 text-amber-400">
                                     <i data-lucide="flame" class="w-5 h-5"></i>
                                 </div>
-                                <h3 class="text-lg font-bold text-white">1. Yüksek Sıcaklık ve İleri Malzemeler</h3>
+                                <h3 class="text-lg font-bold text-white">1. Yüksek Sıcaklık ve İleri Malzemeler (Odak)</h3>
                             </div>
                             <div class="space-y-3">
-                                <div class="course-item flex items-center justify-between p-3 rounded-lg bg-dark-900/50 border border-white/5">
-                                    <span class="text-xs font-mono text-amber-400 bg-amber-500/10 px-2 py-1 rounded">MET 453E</span>
-                                    <span class="text-sm text-gray-300 text-right ml-2">Ceramics Materials</span>
+                                <div class="flex justify-between items-center text-xs text-gray-500 font-mono mb-2 px-1"><span>Ders</span><span>Not</span></div>
+                                <div class="flex items-center justify-between p-3 rounded-lg bg-dark-900/80 border border-amber-500/10">
+                                    <div><span class="text-xs font-mono text-amber-400 bg-amber-500/10 px-2 py-1 rounded">MET 4901E</span><span class="text-sm text-gray-300 ml-2">Eng. Design (Bitirme I)</span></div>
+                                    <span class="text-sm font-bold text-green-400">AA</span>
                                 </div>
-                                <div class="course-item flex items-center justify-between p-3 rounded-lg bg-dark-900/50 border border-white/5">
-                                    <span class="text-xs font-mono text-amber-400 bg-amber-500/10 px-2 py-1 rounded">MET 442E</span>
-                                    <span class="text-sm text-gray-300 text-right ml-2">Composite Materials</span>
+                                <div class="flex items-center justify-between p-3 rounded-lg bg-dark-900/80 border border-amber-500/10">
+                                    <div><span class="text-xs font-mono text-amber-400 bg-amber-500/10 px-2 py-1 rounded">MET 4902E</span><span class="text-sm text-gray-300 ml-2">Eng. Design (Bitirme II)</span></div>
+                                    <span class="text-sm font-bold text-green-400">AA</span>
                                 </div>
-                                <div class="course-item flex items-center justify-between p-3 rounded-lg bg-dark-900/50 border border-white/5">
-                                    <span class="text-xs font-mono text-amber-400 bg-amber-500/10 px-2 py-1 rounded">MET 342E</span>
-                                    <span class="text-sm text-gray-300 text-right ml-2">Non-Ferrous Metals</span>
+                                <div class="flex items-center justify-between p-3 rounded-lg bg-dark-900/80 border border-white/5">
+                                    <div><span class="text-xs font-mono text-gray-400 bg-gray-700/50 px-2 py-1 rounded">MET 442E</span><span class="text-sm text-gray-300 ml-2">Composite Materials</span></div>
+                                    <span class="text-sm font-bold text-green-400">BA</span>
                                 </div>
-                                <div class="course-item flex items-center justify-between p-3 rounded-lg bg-dark-900/50 border border-white/5">
-                                    <span class="text-xs font-mono text-amber-400 bg-amber-500/10 px-2 py-1 rounded">MET 444E</span>
-                                    <span class="text-sm text-gray-300 text-right ml-2">Iron and Steel Materials</span>
+                                <div class="flex items-center justify-between p-3 rounded-lg bg-dark-900/80 border border-white/5">
+                                    <div><span class="text-xs font-mono text-gray-400 bg-gray-700/50 px-2 py-1 rounded">MET 453E</span><span class="text-sm text-gray-300 ml-2">Ceramics Materials</span></div>
+                                    <span class="text-sm font-bold text-blue-400">BB</span>
                                 </div>
-                                <div class="course-item flex items-center justify-between p-3 rounded-lg bg-dark-900/50 border border-white/5">
-                                    <span class="text-xs font-mono text-amber-400 bg-amber-500/10 px-2 py-1 rounded">MET 4901E</span>
-                                    <span class="text-sm text-gray-300 text-right ml-2">Eng. Design (Thesis)</span>
+                                <div class="flex items-center justify-between p-3 rounded-lg bg-dark-900/80 border border-white/5">
+                                    <div><span class="text-xs font-mono text-gray-400 bg-gray-700/50 px-2 py-1 rounded">MET 342E</span><span class="text-sm text-gray-300 ml-2">Non-Ferrous Metals</span></div>
+                                    <span class="text-sm font-bold text-blue-400">BB</span>
                                 </div>
                             </div>
                         </div>
 
                         <!-- 2. Üretim Süreçleri -->
-                        <div class="bg-dark-800/50 rounded-2xl p-6 border border-white/5 hover:border-blue-500/30 transition-colors">
+                        <div class="bg-dark-800/50 rounded-2xl p-6 border border-blue-500/20 hover:border-blue-500/50 transition-colors">
                             <div class="flex items-center gap-3 mb-6 pb-4 border-b border-white/5">
                                 <div class="p-2 rounded-lg bg-blue-500/10 text-blue-400">
                                     <i data-lucide="wrench" class="w-5 h-5"></i>
@@ -411,31 +524,32 @@
                                 <h3 class="text-lg font-bold text-white">2. Üretim & Yüzey Teknolojileri</h3>
                             </div>
                             <div class="space-y-3">
-                                <div class="course-item flex items-center justify-between p-3 rounded-lg bg-dark-900/50 border border-white/5">
-                                    <span class="text-xs font-mono text-blue-400 bg-blue-500/10 px-2 py-1 rounded">MET 468E</span>
-                                    <span class="text-sm text-gray-300 text-right ml-2">Welding Metallurgy</span>
+                                <div class="flex justify-between items-center text-xs text-gray-500 font-mono mb-2 px-1"><span>Ders</span><span>Not</span></div>
+                                <div class="flex items-center justify-between p-3 rounded-lg bg-dark-900/80 border border-blue-500/10">
+                                    <div><span class="text-xs font-mono text-blue-400 bg-blue-500/10 px-2 py-1 rounded">MET 472E</span><span class="text-sm text-gray-300 ml-2">Casting Processes</span></div>
+                                    <span class="text-sm font-bold text-green-400">AA</span>
                                 </div>
-                                <div class="course-item flex items-center justify-between p-3 rounded-lg bg-dark-900/50 border border-white/5">
-                                    <span class="text-xs font-mono text-blue-400 bg-blue-500/10 px-2 py-1 rounded">MET 472E</span>
-                                    <span class="text-sm text-gray-300 text-right ml-2">Casting Processes</span>
+                                <div class="flex items-center justify-between p-3 rounded-lg bg-dark-900/80 border border-blue-500/10">
+                                    <div><span class="text-xs font-mono text-blue-400 bg-blue-500/10 px-2 py-1 rounded">MET 459E</span><span class="text-sm text-gray-300 ml-2">Metal Casting Tech.</span></div>
+                                    <span class="text-sm font-bold text-green-400">AA</span>
                                 </div>
-                                <div class="course-item flex items-center justify-between p-3 rounded-lg bg-dark-900/50 border border-white/5">
-                                    <span class="text-xs font-mono text-blue-400 bg-blue-500/10 px-2 py-1 rounded">MET 459E</span>
-                                    <span class="text-sm text-gray-300 text-right ml-2">Metal Casting Tech.</span>
+                                <div class="flex items-center justify-between p-3 rounded-lg bg-dark-900/80 border border-white/5">
+                                    <div><span class="text-xs font-mono text-gray-400 bg-gray-700/50 px-2 py-1 rounded">MET 468E</span><span class="text-sm text-gray-300 ml-2">Welding Metallurgy</span></div>
+                                    <span class="text-sm font-bold text-green-400">BA</span>
                                 </div>
-                                <div class="course-item flex items-center justify-between p-3 rounded-lg bg-dark-900/50 border border-white/5">
-                                    <span class="text-xs font-mono text-blue-400 bg-blue-500/10 px-2 py-1 rounded">MET 477E</span>
-                                    <span class="text-sm text-gray-300 text-right ml-2">Electrometallurgy</span>
+                                <div class="flex items-center justify-between p-3 rounded-lg bg-dark-900/80 border border-white/5">
+                                    <div><span class="text-xs font-mono text-gray-400 bg-gray-700/50 px-2 py-1 rounded">MET 455E</span><span class="text-sm text-gray-300 ml-2">Processing Lab</span></div>
+                                    <span class="text-sm font-bold text-green-400">BA</span>
                                 </div>
-                                <div class="course-item flex items-center justify-between p-3 rounded-lg bg-dark-900/50 border border-white/5">
-                                    <span class="text-xs font-mono text-blue-400 bg-blue-500/10 px-2 py-1 rounded">MET 455E</span>
-                                    <span class="text-sm text-gray-300 text-right ml-2">Processing Lab</span>
+                                <div class="flex items-center justify-between p-3 rounded-lg bg-dark-900/80 border border-white/5">
+                                    <div><span class="text-xs font-mono text-gray-400 bg-gray-700/50 px-2 py-1 rounded">MET 477E</span><span class="text-sm text-gray-300 ml-2">Electrometallurgy</span></div>
+                                    <span class="text-sm font-bold text-blue-400">BB</span>
                                 </div>
                             </div>
                         </div>
 
                         <!-- 3. Simülasyon, Veri ve Tasarım -->
-                        <div class="bg-dark-800/50 rounded-2xl p-6 border border-white/5 hover:border-emerald-500/30 transition-colors">
+                        <div class="bg-dark-800/50 rounded-2xl p-6 border border-emerald-500/20 hover:border-emerald-500/50 transition-colors">
                             <div class="flex items-center gap-3 mb-6 pb-4 border-b border-white/5">
                                 <div class="p-2 rounded-lg bg-emerald-500/10 text-emerald-400">
                                     <i data-lucide="monitor-play" class="w-5 h-5"></i>
@@ -443,31 +557,32 @@
                                 <h3 class="text-lg font-bold text-white">3. Simülasyon, Veri & Tasarım</h3>
                             </div>
                             <div class="space-y-3">
-                                <div class="course-item flex items-center justify-between p-3 rounded-lg bg-dark-900/50 border border-white/5">
-                                    <span class="text-xs font-mono text-emerald-400 bg-emerald-500/10 px-2 py-1 rounded">MET 312E</span>
-                                    <span class="text-sm text-gray-300 text-right ml-2">Modeling & Simulation</span>
+                                <div class="flex justify-between items-center text-xs text-gray-500 font-mono mb-2 px-1"><span>Ders</span><span>Not</span></div>
+                                <div class="flex items-center justify-between p-3 rounded-lg bg-dark-900/80 border border-emerald-500/10">
+                                    <div><span class="text-xs font-mono text-emerald-400 bg-emerald-500/10 px-2 py-1 rounded">MET 312E</span><span class="text-sm text-gray-300 ml-2">Modeling & Simulation</span></div>
+                                    <span class="text-sm font-bold text-green-400">BA</span>
                                 </div>
-                                <div class="course-item flex items-center justify-between p-3 rounded-lg bg-dark-900/50 border border-white/5">
-                                    <span class="text-xs font-mono text-emerald-400 bg-emerald-500/10 px-2 py-1 rounded">BIL 100E</span>
-                                    <span class="text-sm text-gray-300 text-right ml-2">Intro to Python</span>
+                                <div class="flex items-center justify-between p-3 rounded-lg bg-dark-900/80 border border-emerald-500/10">
+                                    <div><span class="text-xs font-mono text-emerald-400 bg-emerald-500/10 px-2 py-1 rounded">MET 435E</span><span class="text-sm text-gray-300 ml-2">Problem Solving Tech.</span></div>
+                                    <span class="text-sm font-bold text-green-400">BA</span>
                                 </div>
-                                <div class="course-item flex items-center justify-between p-3 rounded-lg bg-dark-900/50 border border-white/5">
-                                    <span class="text-xs font-mono text-emerald-400 bg-emerald-500/10 px-2 py-1 rounded">MET 332E</span>
-                                    <span class="text-sm text-gray-300 text-right ml-2">Quality Engineering</span>
+                                <div class="flex items-center justify-between p-3 rounded-lg bg-dark-900/80 border border-white/5">
+                                    <div><span class="text-xs font-mono text-gray-400 bg-gray-700/50 px-2 py-1 rounded">MET 332E</span><span class="text-sm text-gray-300 ml-2">Quality Engineering</span></div>
+                                    <span class="text-sm font-bold text-blue-400">BB</span>
                                 </div>
-                                <div class="course-item flex items-center justify-between p-3 rounded-lg bg-dark-900/50 border border-white/5">
-                                    <span class="text-xs font-mono text-emerald-400 bg-emerald-500/10 px-2 py-1 rounded">MET 435E</span>
-                                    <span class="text-sm text-gray-300 text-right ml-2">Problem Solving Tech.</span>
+                                <div class="flex items-center justify-between p-3 rounded-lg bg-dark-900/80 border border-white/5">
+                                    <div><span class="text-xs font-mono text-gray-400 bg-gray-700/50 px-2 py-1 rounded">RES 105E</span><span class="text-sm text-gray-300 ml-2">Technical Drawing</span></div>
+                                    <span class="text-sm font-bold text-blue-400">BB</span>
                                 </div>
-                                <div class="course-item flex items-center justify-between p-3 rounded-lg bg-dark-900/50 border border-white/5">
-                                    <span class="text-xs font-mono text-emerald-400 bg-emerald-500/10 px-2 py-1 rounded">RES 105E</span>
-                                    <span class="text-sm text-gray-300 text-right ml-2">Technical Drawing</span>
+                                <div class="flex items-center justify-between p-3 rounded-lg bg-dark-900/80 border border-white/5">
+                                    <div><span class="text-xs font-mono text-gray-400 bg-gray-700/50 px-2 py-1 rounded">BIL 100E</span><span class="text-sm text-gray-300 ml-2">Intro to Python</span></div>
+                                    <span class="text-sm font-bold text-gray-500">CC</span>
                                 </div>
                             </div>
                         </div>
 
                         <!-- 4. Temel Metalurji & Termodinamik -->
-                        <div class="bg-dark-800/50 rounded-2xl p-6 border border-white/5 hover:border-purple-500/30 transition-colors">
+                        <div class="bg-dark-800/50 rounded-2xl p-6 border border-purple-500/20 hover:border-purple-500/50 transition-colors">
                             <div class="flex items-center gap-3 mb-6 pb-4 border-b border-white/5">
                                 <div class="p-2 rounded-lg bg-purple-500/10 text-purple-400">
                                     <i data-lucide="atom" class="w-5 h-5"></i>
@@ -475,31 +590,28 @@
                                 <h3 class="text-lg font-bold text-white">4. Temel Metalurji & Termodinamik</h3>
                             </div>
                             <div class="space-y-3">
-                                <div class="course-item flex items-center justify-between p-3 rounded-lg bg-dark-900/50 border border-white/5">
-                                    <span class="text-xs font-mono text-purple-400 bg-purple-500/10 px-2 py-1 rounded">MET 215E</span>
-                                    <span class="text-sm text-gray-300 text-right ml-2">Thermodynamics I</span>
+                                <div class="flex justify-between items-center text-xs text-gray-500 font-mono mb-2 px-1"><span>Ders</span><span>Not</span></div>
+                                <div class="flex items-center justify-between p-3 rounded-lg bg-dark-900/80 border border-purple-500/10">
+                                    <div><span class="text-xs font-mono text-purple-400 bg-purple-500/10 px-2 py-1 rounded">MET 230E</span><span class="text-sm text-gray-300 ml-2">Materials Science</span></div>
+                                    <span class="text-sm font-bold text-green-400">AA</span>
                                 </div>
-                                <div class="course-item flex items-center justify-between p-3 rounded-lg bg-dark-900/50 border border-white/5">
-                                    <span class="text-xs font-mono text-purple-400 bg-purple-500/10 px-2 py-1 rounded">MET 216E</span>
-                                    <span class="text-sm text-gray-300 text-right ml-2">Thermodynamics II</span>
+                                <div class="flex items-center justify-between p-3 rounded-lg bg-dark-900/80 border border-white/5">
+                                    <div><span class="text-xs font-mono text-gray-400 bg-gray-700/50 px-2 py-1 rounded">MET 215E</span><span class="text-sm text-gray-300 ml-2">Thermodynamics I</span></div>
+                                    <span class="text-sm font-bold text-blue-400">BB</span>
                                 </div>
-                                <div class="course-item flex items-center justify-between p-3 rounded-lg bg-dark-900/50 border border-white/5">
-                                    <span class="text-xs font-mono text-purple-400 bg-purple-500/10 px-2 py-1 rounded">MET 301E</span>
-                                    <span class="text-sm text-gray-300 text-right ml-2">Phase Diagrams</span>
+                                <div class="flex items-center justify-between p-3 rounded-lg bg-dark-900/80 border border-white/5">
+                                    <div><span class="text-xs font-mono text-gray-400 bg-gray-700/50 px-2 py-1 rounded">MET 301E</span><span class="text-sm text-gray-300 ml-2">Phase Diagrams</span></div>
+                                    <span class="text-sm font-bold text-gray-500">CC</span>
                                 </div>
-                                <div class="course-item flex items-center justify-between p-3 rounded-lg bg-dark-900/50 border border-white/5">
-                                    <span class="text-xs font-mono text-purple-400 bg-purple-500/10 px-2 py-1 rounded">MET 314E</span>
-                                    <span class="text-sm text-gray-300 text-right ml-2">Transport Phenomena</span>
-                                </div>
-                                <div class="course-item flex items-center justify-between p-3 rounded-lg bg-dark-900/50 border border-white/5">
-                                    <span class="text-xs font-mono text-purple-400 bg-purple-500/10 px-2 py-1 rounded">MET 230E</span>
-                                    <span class="text-sm text-gray-300 text-right ml-2">Materials Science</span>
+                                <div class="flex items-center justify-between p-3 rounded-lg bg-dark-900/80 border border-white/5">
+                                    <div><span class="text-xs font-mono text-gray-400 bg-gray-700/50 px-2 py-1 rounded">MET 314E</span><span class="text-sm text-gray-300 ml-2">Transport Phenomena</span></div>
+                                    <span class="text-sm font-bold text-gray-500">CC</span>
                                 </div>
                             </div>
                         </div>
 
                         <!-- 5. Karakterizasyon -->
-                        <div class="bg-dark-800/50 rounded-2xl p-6 border border-white/5 hover:border-pink-500/30 transition-colors md:col-span-2 xl:col-span-2">
+                        <div class="bg-dark-800/50 rounded-2xl p-6 border border-pink-500/20 hover:border-pink-500/50 transition-colors md:col-span-2 xl:col-span-2">
                             <div class="flex items-center gap-3 mb-6 pb-4 border-b border-white/5">
                                 <div class="p-2 rounded-lg bg-pink-500/10 text-pink-400">
                                     <i data-lucide="scan-search" class="w-5 h-5"></i>
@@ -507,17 +619,17 @@
                                 <h3 class="text-lg font-bold text-white">5. Karakterizasyon ve Mekanik Özellikler</h3>
                             </div>
                             <div class="grid md:grid-cols-2 gap-4">
-                                <div class="course-item flex items-center justify-between p-3 rounded-lg bg-dark-900/50 border border-white/5">
-                                    <span class="text-xs font-mono text-pink-400 bg-pink-500/10 px-2 py-1 rounded">MET 303E</span>
-                                    <span class="text-sm text-gray-300 text-right ml-2">Materials Characterization (SEM/XRD)</span>
+                                <div class="flex items-center justify-between p-3 rounded-lg bg-dark-900/80 border border-pink-500/10">
+                                    <div><span class="text-xs font-mono text-pink-400 bg-pink-500/10 px-2 py-1 rounded">MET 201E</span><span class="text-sm text-gray-300 ml-2">Structure & Properties</span></div>
+                                    <span class="text-sm font-bold text-green-400">AA</span>
                                 </div>
-                                <div class="course-item flex items-center justify-between p-3 rounded-lg bg-dark-900/50 border border-white/5">
-                                    <span class="text-xs font-mono text-pink-400 bg-pink-500/10 px-2 py-1 rounded">MET 305E</span>
-                                    <span class="text-sm text-gray-300 text-right ml-2">Mechanical Properties</span>
+                                <div class="flex items-center justify-between p-3 rounded-lg bg-dark-900/80 border border-white/5">
+                                    <div><span class="text-xs font-mono text-gray-400 bg-gray-700/50 px-2 py-1 rounded">MET 305E</span><span class="text-sm text-gray-300 ml-2">Mechanical Properties</span></div>
+                                    <span class="text-sm font-bold text-green-400">BA</span>
                                 </div>
-                                <div class="course-item flex items-center justify-between p-3 rounded-lg bg-dark-900/50 border border-white/5">
-                                    <span class="text-xs font-mono text-pink-400 bg-pink-500/10 px-2 py-1 rounded">MET 201E</span>
-                                    <span class="text-sm text-gray-300 text-right ml-2">Structure & Properties</span>
+                                <div class="flex items-center justify-between p-3 rounded-lg bg-dark-900/80 border border-white/5">
+                                    <div><span class="text-xs font-mono text-gray-400 bg-gray-700/50 px-2 py-1 rounded">MET 303E</span><span class="text-sm text-gray-300 ml-2">Materials Characterization</span></div>
+                                    <span class="text-sm font-bold text-gray-500">CC</span>
                                 </div>
                             </div>
                         </div>
@@ -526,11 +638,8 @@
                 </div>
             </details>
 
-        </div>
-    </section>
-
-    <!-- Featured Research (Thesis) - Restored -->
-    <section id="research" class="py-20 bg-dark-800/50">
+            <!-- Featured Research (Thesis) -->
+            <section id="research" class="py-20 bg-dark-800/50">
         <div class="max-w-screen-xl mx-auto px-4">
             <div class="mb-12">
                 <h2 class="text-3xl font-bold mb-4 text-white">Akademik Odak</h2>
